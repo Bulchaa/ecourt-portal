@@ -1,13 +1,16 @@
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { FilePlus2, CalendarDays, Activity, ShieldAlert, ArrowRight } from "lucide-react";
+import { FilePlus2, CalendarDays, Activity, ShieldAlert, ArrowRight, FileText, SendHorizonal } from "lucide-react";
 
 export default function HomePage() {
   const quickLinks = [
     { title: "Submit New Case", href: "/new-case", icon: FilePlus2, description: "Start a new legal proceeding." },
     { title: "View Appointments", href: "/appointments", icon: CalendarDays, description: "Check your upcoming court dates." },
+    { title: "View Court Orders", href: "/court-orders", icon: FileText, description: "Access official court orders." },
+    { title: "Reply to Court Order", href: "/reply-to-order", icon: SendHorizonal, description: "Respond to a court directive." },
     { title: "Track Your Case", href: "/track-case", icon: Activity, description: "Monitor the status of your case." },
     { title: "File a Complaint", href: "/file-complaint", icon: ShieldAlert, description: "Raise concerns or grievances." },
   ];
@@ -19,8 +22,8 @@ export default function HomePage() {
           <Image 
             src="https://placehold.co/1200x400.png" 
             alt="Courthouse" 
-            layout="fill" 
-            objectFit="cover" 
+            fill // Use fill instead of layout
+            style={{objectFit: "cover"}} // Use style for objectFit
             data-ai-hint="courthouse building"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
@@ -33,16 +36,18 @@ export default function HomePage() {
 
       <section>
         <h2 className="text-2xl font-semibold font-headline mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Adjusted grid for 6 items */}
           {quickLinks.map((link) => (
-            <Card key={link.title} className="hover:shadow-xl transition-shadow duration-300">
+            <Card key={link.title} className="hover:shadow-xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg font-medium font-headline">{link.title}</CardTitle>
                 <link.icon className="h-6 w-6 text-muted-foreground" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p className="text-sm text-muted-foreground mb-4">{link.description}</p>
-                <Button asChild variant="outline" size="sm" className="w-full">
+              </CardContent>
+              <CardContent className="pt-0">
+                <Button asChild variant="outline" size="sm" className="w-full mt-auto">
                   <Link href={link.href}>
                     Go to {link.title}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -76,3 +81,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    
